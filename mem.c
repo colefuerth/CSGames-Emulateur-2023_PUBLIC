@@ -32,7 +32,7 @@
 #define KEYADDR 0x200
 #define OUTADDR 0xFFF1
 
-uint8_t mem[65536];
+uint8_t mem[MEMSIZE];
 uint8_t output_writes = 0;
 int restart_flag = 0;
 
@@ -51,7 +51,6 @@ uint16_t counterfunc(uint16_t address)
         if (writes == 48)
         {
             writes = 0;
-            printf("%s\n", out);
             restart_flag = 1;
         }
         return 1;
@@ -90,20 +89,25 @@ int main(int argc, char *argv[])
     puts("done.");
 
     // we brute forced this
-    char key[] = "808";
-    printf("KEY: %s\n", key);
-    for (int i = 0; i < 3; i++)
-        write6502(KEYADDR + i, key[i]);
+    char key[] = "000";
+    for (int i = 800; i < 1000; i++)
+    {
+        printf("KEY: %s\n", key);
+        sprintf(key, "%03d", i);
+        for (int i = 0; i < 3; i++)
+            write6502(KEYADDR + i, key[i]);
 
-    restart_flag = 0;
-    reset6502();
-    printf("starting emulation\n");
-    while (!restart_flag)
-    {
-        step6502();
-    }
-    if (read6502(OUTADDR) != '#')
-    {
-        return 0;
+        restart_flag = 0;
+        reset6502();
+        // printf("starting emulation\n");
+        while (!restart_flag)
+        {
+            step6502();
+        }
+        if (read6502(OUTADDR) != '#')
+        {
+            printf("%s\n", out);
+            return 0;
+        }
     }
 }
