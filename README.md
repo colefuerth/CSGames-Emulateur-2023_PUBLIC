@@ -17,4 +17,4 @@ fib.c contains the code for building the binary for fib and running it, we didnt
 
 ## Other Notes
 
-- [Mathew Pellarin](https://github.com/matp101) competed at CSGames 2023 in the Emulator category. We won **first place** with this submission.
+- [Mathew Pellarin](https://github.com/matp101) and I competed at CSGames 2023 in the Emulator category. We won **first place** with this submission.
